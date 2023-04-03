@@ -9,6 +9,7 @@ const Component = () => {
   const [listData, setListData] = useState([]);
   const [total, setTotal] = useState(6);
   const [count, setCount] = useState(1);
+  let select = React.createRef();
   useEffect(() => {
     try {
       (async function () {
@@ -28,6 +29,7 @@ const Component = () => {
       console.log(error);
     }
   }, []);
+
   const handleClick = (item) => {
     setDataShow(item);
   };
@@ -76,6 +78,24 @@ const Component = () => {
     // }
     setCount(newCount);
   };
+  const changeGenre = () => {
+    console.log("value: ", select.current.value);
+    let arr = [];
+    for (let item in data) {
+      // console.log("item: ", data[item].Genre);
+      let data2 = data[item].Genre;
+      // for (let i in data2) {
+      //   console.log("i", data2[i]);
+      if (data2.includes(select.current.value) === true) {
+        arr.push(data[item]);
+        // console.log("array: ", data[item]);
+      }
+    }
+    setListData(arr);
+    if (select.current.value === "All") {
+      setListData(data);
+    }
+  };
   return (
     <div className="container">
       <div className="body">
@@ -86,11 +106,11 @@ const Component = () => {
           <div className="title">{dataShow.Title}</div>
           <div className="information">
             <ol>
-              <li>
+              <li className="actors">
                 <strong>Actors: </strong> {dataShow.Actors}
               </li>
               <li>
-                <strong>Director: </strong> {dataShow.Director}
+                <strong>Genre: </strong> {dataShow.Genre}
               </li>
               <li>
                 <strong>Plot: </strong> {dataShow.Plot}
@@ -107,10 +127,14 @@ const Component = () => {
       </div>
       <div className="footer">
         <div className="footer-select">
-          <select>
-            <option value="one">One</option>
-            <option value="tow">Tow</option>
-            <option value="three">Three</option>
+          <select ref={select} onChange={changeGenre}>
+            <option value="All">Genre All</option>
+            <option value="Adventure">Adventure</option>
+            <option value="Drama">Drama</option>
+            <option value="Family">Family</option>
+            <option value="Thriller">Thriller</option>
+            <option value="Action">Action</option>
+            <option value="Crime">Crime</option>
           </select>
         </div>
         <div className="prev" onClick={(e) => handlePrev(e)}>

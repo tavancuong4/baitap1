@@ -10,18 +10,18 @@ const Exercise2 = () => {
 
   const [count, setCount] = useState(0);
   const [me, setMe] = useState({});
-  const [speed, setSpeed] = useState(0);
-  const [cost, setCost] = useState("");
-  const [passengers, setPassengers] = useState(0);
-  const [film, setFilm] = useState(0);
+  // const [speed, setSpeed] = useState(650);
+  // const [cost, setCost] = useState("unknown");
+  // const [passengers, setPassengers] = useState(0);
+  // const [film, setFilm] = useState(0);
 
   const [count2, setCount2] = useState(0);
   const [machine, setMachine] = useState({});
-  const [speed2, setSpeed2] = useState(0);
-  const [cost2, setCost2] = useState("");
-  const [passengers2, setPassengers2] = useState(0);
-  const [film2, setFilm2] = useState(0);
-  const [dataCard, setDataCard] = useState({});
+  // const [speed2, setSpeed2] = useState(0);
+  // const [cost2, setCost2] = useState("");
+  // const [passengers2, setPassengers2] = useState(0);
+  // const [film2, setFilm2] = useState(0);
+  // const [dataCard, setDataCard] = useState({});
 
   useEffect(() => {
     try {
@@ -56,9 +56,11 @@ const Exercise2 = () => {
               );
               arr = arr.concat(res.data.results);
               console.log("array 4:", page, arr);
-              const index1 = Math.floor(Math.random() * data.length);
-              setMe(data[index1]);
               setData(arr);
+              const index1 = Math.floor(Math.random() * arr.length);
+              setMe(arr[index1]);
+              console.log("Me cuong chi: ", index1, arr[index1]);
+              arr.splice(index1, 1);
               if (res.data.next) {
                 page += 1;
                 let res = await axios.get(
@@ -67,8 +69,12 @@ const Exercise2 = () => {
                 arr = arr.concat(res.data.results);
                 console.log("array 4:", page, arr);
                 setData(arr);
+                const index1 = Math.floor(Math.random() * arr.length);
+                setMe(arr[index1]);
+                console.log("Me cuong chi: ", index1, arr[index1]);
+                arr.splice(index1, 1);
               } else {
-                console.log("đã hết dữ liệu");
+                console.log("đã hết dữ liệu 2");
                 return arr;
               }
             } else {
@@ -77,11 +83,21 @@ const Exercise2 = () => {
             }
           }
         }
+        // const index1 = Math.floor(Math.random() * arr.length);
+        // setMe(arr[index1]);
+        // console.log("Me cuong chi: ", index1, arr[index1]);
+        // arr.splice(index1, 1);
       })();
     } catch (error) {
       console.log(error);
     }
   }, []);
+  // useEffect(async () => {
+  //   const index1 = await Math.floor(Math.random() * data.length);
+  //   setMe(data[index1]);
+  //   console.log("Me cuong chi: ", index1, data[index1]);
+  //   data.splice(index1, 1);
+  // }, []);
 
   const handleClickMe = () => {
     const index1 = Math.floor(Math.random() * data.length);
@@ -96,6 +112,7 @@ const Exercise2 = () => {
     console.log("Machine: ", index2, data[index2]);
     data.splice(index2, 1);
     setTotal(total + 1);
+    setShow(false);
   };
   useEffect(() => {
     // const index1 = Math.floor(Math.random() * data.length);
@@ -106,11 +123,15 @@ const Exercise2 = () => {
     let b = parseInt(machine.max_atmosphering_speed);
     if (a > b) {
       setCount(count + 1);
+      document.getElementById("list1").style.background = "Green";
+      document.getElementById("list2").style.background = "Red";
     } else if (a < b) {
+      document.getElementById("list2").style.background = "Green";
+      document.getElementById("list1").style.background = "Red";
       setCount2(count2 + 1);
     } else {
-      setCost(count);
-      setCost2(count2);
+      setCount(count);
+      setCount2(count2);
     }
     console.log(
       "1:",
@@ -119,12 +140,27 @@ const Exercise2 = () => {
       machine.max_atmosphering_speed
     );
     console.log("total: ", total);
-    if (total === 10 && count > cost2) {
+    if (total === 10 && count > count2) {
       setCount(0);
-      return alert("Bạn đã thắng máy ");
-    } else if (total === 10 && count < cost2) {
       setCount2(0);
+      setTotal(0);
+      document.getElementById("list1").style.background = "White";
+      document.getElementById("list2").style.background = "White";
+      return alert("Bạn đã thắng máy ");
+    } else if (total === 10 && count < count2) {
+      setCount(0);
+      setCount2(0);
+      setTotal(0);
+      document.getElementById("list2").style.background = "White";
+      document.getElementById("list1").style.background = "White";
       return alert("Bạn đã thua máy ");
+    } else if (total === 10 && count === count2) {
+      setCount(0);
+      setCount2(0);
+      setTotal(0);
+      document.getElementById("list2").style.background = "White";
+      document.getElementById("list1").style.background = "White";
+      return alert("Bạn và máy hòa  ");
     }
   }, [me, machine]);
   const handleClickShow = () => {
@@ -145,7 +181,7 @@ const Exercise2 = () => {
           <div className="body-image">
             <img src={starwars} alt="" />
           </div>
-          <div className="body-list">
+          <div className="body-list" id="list1">
             <div className="item">
               <span>Max Speed</span>
               <span>{me.max_atmosphering_speed}</span>
@@ -169,12 +205,12 @@ const Exercise2 = () => {
         </div>
         <div className="body-item">
           <div className="body-title" onClick={() => handleClickMachine()}>
-            Storm TV Twin-Pod cloud car
+            Storm Twin cloud car
           </div>
           <div className="body-image">
             <img src={starwars} alt="" />
           </div>
-          <div className="body-list">
+          <div className="body-list" id="list2">
             <div className="item" onClick={() => handleClickShow()}>
               <span>Max Speed</span>
               <span>{show ? machine.max_atmosphering_speed : "?"}</span>

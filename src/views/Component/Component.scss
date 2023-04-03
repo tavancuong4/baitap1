@@ -68,18 +68,22 @@
     .footer-list {
       display: flex;
       flex-direction: row;
-
+      // height: 100vh;
       overflow: hidden;
 
       .list {
-        height: 230px;
         display: flex;
         gap: 27px;
+        width: 100%;
         .item {
-          width: 163px;
-          margin-right: 15px;
+          height: 230px;
+          width: 130px;
+          margin-right: 16px;
           overflow: hidden;
-          // border: 1px solid red;
+          img {
+            width: 100%;
+            height: 90%;
+          }
         }
       }
     }
@@ -93,7 +97,7 @@
     }
   }
 }
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 992px) {
   .container {
     .body-right {
       font-size: 13px;
@@ -107,46 +111,111 @@
   .container {
     width: 500px;
     .body {
-      display: flex;
-      flex-direction: column-reverse;
+      // display: flex;
+      // flex-direction: column-reverse;
       margin-top: 20px;
       margin-left: 40px;
+      position: relative;
+      margin-top: 100px;
       .body-left {
-        width: 100%;
+        width: 50%;
         height: 300px;
         // margin-left: 13px;
         img {
-          width: 95%;
+          width: 100%;
         }
       }
       .body-right {
         margin-left: 0px;
-        width: 80%;
+        width: 50%;
+        .title {
+          position: absolute;
+          left: 100px;
+          top: -90px;
+        }
+        .information {
+          .actors {
+            // color: red;
+            position: absolute;
+            left: 15px;
+            top: -37px;
+          }
+        }
       }
     }
     .footer {
       margin-left: 40px;
       width: 73%;
       .footer-select {
-        // padding: 0px 20px 0px 14px;
+        display: flex;
+        justify-content: center;
         select {
-          width: 100%;
-          // padding: 5px;
+          width: 90%;
+          margin-right: 4px;
         }
       }
       .prev {
-        left: -30px;
+        left: -29px;
       }
       .footer-list {
+        margin-left: 10px;
         .list {
-          padding: 0px 15px;
+          padding: 0px 11px;
           .item {
             width: 140px;
+            margin-bottom: 10px;
           }
         }
       }
       .next {
         right: -30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .container {
+    .body {
+      flex-direction: column-reverse;
+      .body-left {
+        width: 100%;
+        margin-left: -6px;
+        img {
+          width: 88%;
+        }
+      }
+      .body-right {
+        margin-left: -35px;
+        width: 100%;
+        .title {
+          position: absolute;
+          left: 65px;
+          top: -70px;
+        }
+        .information {
+          .actors {
+            position: absolute;
+            top: -3px;
+            left: 5px;
+          }
+        }
+      }
+    }
+    .footer {
+      margin-left: 30px;
+      width: 73%;
+      .footer-select {
+        select {
+          width: 88%;
+          margin-right: 20px;
+        }
+      }
+      .next {
+        margin-right: 18px;
+      }
+      .footer-list {
+        margin-left: 3px;
       }
     }
   }
