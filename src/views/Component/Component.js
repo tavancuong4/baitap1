@@ -22,7 +22,7 @@ const Component = () => {
         setListData(data.slice(0, total));
 
         console.log("data:", data);
-        console.log("data Show: ", dataShow);
+        // console.log("data Show: ", dataShow);
         console.log("list data: ", listData);
       })();
     } catch (error) {
@@ -42,40 +42,18 @@ const Component = () => {
     let end = total * newCount;
     setListData(data.slice(end - total, end));
     console.log("newCount: ", newCount);
-    // if (count === 1) {
-    //   newCount = Math.ceil(data.length / total);
-    // }
-
-    // if (count === 0) {
-    //   newCount = Math.ceil(data.length / total);
-    // } else {
-    //   newCount = count - 1;
-    //   console.log("count: ", count);
-    //   let end = total * count;
-    //   setListData(data.slice(end - total, end));
-    // }
     setCount(newCount);
   };
   const handleNext = (e) => {
     e.preventDefault();
     let newCount;
+
     newCount = count + 1;
     if (data.length / total <= count) newCount = 1;
     console.log("count: ", count);
     let end = total * newCount;
     setListData(data.slice(end - total, end));
     console.log("newCount: ", newCount);
-    // if (data.length / total <= count + 1) {
-    //   newCount = 0;
-    // }
-    // if (data.length / total <= count) {
-    //   newCount = 0;
-    // } else {
-    //   newCount = count + 1;
-    //   console.log("count: ", count);
-    //   let end = total * newCount;
-    //   setListData(data.slice(end - total, end));
-    // }
     setCount(newCount);
   };
   const changeGenre = () => {
@@ -125,7 +103,7 @@ const Component = () => {
           </div>
         </div>
       </div>
-      <div className="footer">
+      <div className="footer"> 
         <div className="footer-select">
           <select ref={select} onChange={changeGenre}>
             <option value="All">Genre All</option>
